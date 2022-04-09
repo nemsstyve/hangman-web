@@ -1,0 +1,69 @@
+
+#container-hangman {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    flex:1
+}
+
+.left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: cornflowerblue;
+}
+
+.right {
+    align-items: center;
+    background-color:ivory;
+}
+
+.hangman-item {
+    /* display: flex; */
+    border: 3px solid black;
+    background-color: black;
+}
+
+#rope {
+    border-style: dashed; 
+    background: none; 
+    position:absolute; 
+    right: 0;
+    height: 100px
+}
+
+#head {
+    border-radius: 50%;
+    height: 100px;
+    aspect-ratio: 1/1;
+    position: absolute;
+    top: 100%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+}
+#body {
+    position: absolute;
+    top: 100%;
+    height: 150px;
+}
+
+#arms {
+    position: inherit;
+    width: 120px;
+    top: 30px;
+    transform: translateX(-50%);
+}
+.leg {
+    position: inherit;
+    height: 80px;
+    bottom: -80px;
+    transform-origin: top left;
+}
+#leg-right {
+    transform: rotate(-30deg);
+}
+#leg-left {
+    transform: rotate(30deg);
+}

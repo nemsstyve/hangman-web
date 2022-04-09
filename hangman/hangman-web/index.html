@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hangman Web</title>
+        <link rel="stylesheet" href="css/hangman.css" />
+        <link rel="stylesheet" href="css/index.css" />
+    </head>
+    <body>
+        <div id="container">
+            <div class="container-item left">
+            <div id="letter-board" class="board">
+                <h3> Lettres proposées </h3>
+                <div>
+                    {{range .LettersSuggested}}
+                        <p>{{.}}</p>
+                    {{end}}
+                </div>
+            </div>
+            <h1 id="ToFind">{{.ToFind}}</h1>
+            <h3 style="color:red">{{.Error}}</h3>
+          
+            {{if and (ge .Attempts 1) (ne .Word .ToFind)}}
+            <form method="POST" action="/hangman">
+                <input type="text" maxlength="{{len .Word}}" name="Letter" autofocus placeholder="Choose a letter"/>
+                <input type="submit" name="Submit" value="Envoyer" />
+            </form>
+            {{else if eq .ToFind .Word}}
+                <h1 style="color: green">CONGRATS !</h1>
+                <a href="/replay">Play again</a>
+            {{else}}
+            <h1 style="color: red">You loose..., the word was {{.Word}}</h1>
+            <a href="/replay">Play again</a>
+            {{end}}
+        </div>
+        <div class="container-item right">
+            <div  id="hangman-board" class="board">
+                <h3> Hangman board </h3>
+                <pre >
+                    {{
+                        index .HangmanPositions (sub 9 .Attempts)
+                    }}
+                </pre>
+            </div>
+            <div id="container-hangman">
+                {{ if lt .Attempts 8}}
+                <div class="hangman-item" style="width: 35%; position:relative; left: 8%;">
+                    {{ if lt .Attempts 6}}
+                    <div id="rope" class="hangman-item">
+                        {{ if lt .Attempts 5}}
+                        <div id="head" class="hangman-item">
+                            {{ if lt .Attempts 4}}
+                            <div id="body" class="hangman-item">
+                                {{ if lt .Attempts 3}}
+                                <div id="arms" class="hangman-item"></div>
+                                {{end}}
+                                {{ if lt .Attempts 2}}
+                                <div class="hangman-item leg" id="leg-left"></div>
+                                {{end}}
+                                {{ if lt .Attempts 1}}
+                                <div class="hangman-item leg" id="leg-right"></div>
+                                {{end}}
+                            </div>
+                            {{end}}
+                        </div>
+                        {{end}}
+                    </div>
+                    {{end}}
+                </div>
+                {{end}}
+                {{ if lt .Attempts 9}}
+                <div id="trunc" class="hangman-item" style="height: 50vh;width:0px;">
+                    {{ if lt .Attempts 7}}
+                    <div class="hangman-item" style="transform: rotate(45deg); position:relative; top: -20px; left: 35px;height: 100px;"></div>
+                    {{end}}
+                </div>
+                {{ end }}
+                {{ if lt .Attempts 10}}
+                 <div id="base" style="width: 50%" class="hangman-item"></div>
+                {{end}}
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
